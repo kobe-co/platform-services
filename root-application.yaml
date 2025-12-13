@@ -3,13 +3,11 @@ kind: Application
 metadata:
   name: platform-root
   namespace: argocd
+  finalizers:
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    # Sync Root Application first
-    repoURL: https://github.com/smooti/platform-services.git
-    path: appsets/
-    targetRevision: HEAD
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
@@ -23,7 +21,7 @@ spec:
       targetRevision: HEAD
       path: projects
 
-    # Sync core apps
+    # Sync appsets
     - repoURL: https://github.com/smooti/platform-services.git
       targetRevision: HEAD
       path: appsets

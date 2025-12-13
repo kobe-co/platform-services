@@ -16,10 +16,11 @@ spec:
       prune: true
       selfHeal: true
   sources:
-    # Sync projects
-    - repoURL: https://github.com/smooti/platform-services.git
-      targetRevision: HEAD
-      path: projects
+    # FIXME: When deleteing ArgoCD Applications will hang
+    # # Sync projects
+    # - repoURL: https://github.com/smooti/platform-services.git
+    #   targetRevision: HEAD
+    #   path: projects
 
     # Sync appsets
     - repoURL: https://github.com/smooti/platform-services.git

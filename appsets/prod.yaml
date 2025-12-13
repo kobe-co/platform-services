@@ -27,7 +27,7 @@ spec:
             releaseName: '{{.path.basename}}'
             valueFiles:
               - $values/apps/{{.path.basename}}/common/common-values.yaml
-              - $values/apps/{{.path.basename}}/local-prod/default-env-values.yaml
+              - $values/apps/{{.path.basename}}/environments/local-prod/default-env-values.yaml
 
         # Values Git repo (THIS defines $values)
         - repoURL: https://github.com/smooti/platform-services.git

@@ -25,7 +25,8 @@ spec:
         helm:
           releaseName: '{{.path.basename}}'
           valueFiles:
-            - $values/apps/{{.path.basename}}/environments/local-prod/values.yaml
+            - $values/apps/{{.path.basename}}/common/common-values.yaml
+            - $values/apps/{{.path.basename}}/environments/local-prod/default-env-values.yaml
 
       destination:
         server: https://kubernetes.default.svc

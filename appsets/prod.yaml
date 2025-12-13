@@ -7,28 +7,29 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: https://github.com/smooti/platform-services.git
-      revision: HEAD
-      directories:
-      - path: apps/*/environments/local-prod
-  template:      
+    - git:
+        repoURL: https://github.com/smooti/platform-services.git
+        revision: HEAD
+        files:
+          - path: apps/*/app.yaml
+  template:
     metadata:
-      name: '{{index .path.segments 1}}-{{index .path.segments 3}}' 
+      name: '{{.path.basename}}-prod'
     spec:
-      # The project the application belongs to.
       project: default
 
-      # Source of the application manifests
       source:
-        repoURL: https://github.com/smooti/platform-services.git
-        targetRevision: HEAD
-        path: '{{.path.path}}'
-      
-      # Destination cluster and namespace to deploy the application
+        repoURL: '{{.chart.repoURL}}'
+        chart: '{{.chart.name}}'
+        targetRevision: '{{.chart.version}}'
+        helm:
+          releaseName: '{{.path.basename}}'
+          valueFiles:
+            - $values/apps/{{.path.basename}}/environments/local-prod/values.yaml
+
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{index .path.segments 1}}-{{index .path.segments 3}}'
+        namespace: '{{.namespace}}'
 
       # Sync policy
       syncPolicy:

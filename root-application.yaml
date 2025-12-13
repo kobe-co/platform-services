@@ -8,7 +8,7 @@ spec:
   source:
     # Sync Root Application first
     repoURL: https://github.com/smooti/platform-services.git
-    path: apps/argo-root
+    path: appsets/
     targetRevision: HEAD
   destination:
     namespace: argocd

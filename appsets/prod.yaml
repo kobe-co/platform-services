@@ -17,7 +17,7 @@ spec:
     metadata:
       name: '{{.path.basename}}-prod'
     spec:
-      project: platform
+      project: default
 
       sources:
         # Chart Git repo

@@ -7,7 +7,7 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-    # Generate params that we can reference from app definitions in apps/*/app.yaml
+    # Generate params that we can reference from app definitions in apps/*/config.yaml
     - git:
         repoURL: https://github.com/smooti/platform-services.git
         revision: HEAD

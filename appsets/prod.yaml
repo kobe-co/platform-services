@@ -12,7 +12,7 @@ spec:
         repoURL: https://github.com/smooti/platform-services.git
         revision: HEAD
         files:
-          - path: apps/*/app.yaml
+          - path: apps/*/config.yaml
   template:
     metadata:
       name: '{{.path.basename}}-prod'

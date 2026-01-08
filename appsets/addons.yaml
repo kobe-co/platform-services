@@ -37,6 +37,7 @@ spec:
           chart: "{{name}}"
           targetRevision: "{{versions.[cluster.labels.environment]}}"
           helm:
+            ignoreMissingValueFiles: true
             releaseName: "{{name}}"
             valueFiles:
               - $values/apps/addons/{{.path.basename}}/common/common-values.yaml

@@ -7,7 +7,7 @@ spec:
   generators:
     - matrix:
         generators:
-          # Get application configs
+          # Get application metadata
           - git:
               repoURL:
               revision: HEAD

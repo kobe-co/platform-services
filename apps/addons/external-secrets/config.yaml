@@ -1,0 +1,6 @@
+repoURL: https://charts.external-secrets.io
+name: external-secrets
+namespace: external-secrets
+versions:
+  local-dev: 1.1.1
+  local-prod: 1.1.1

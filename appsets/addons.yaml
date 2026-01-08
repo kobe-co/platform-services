@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          # Get application configs
+          - git:
+              repoURL:
+              revision: HEAD
+              files:
+                - path: apps/addons/*/config.yaml
+
+          # Deploy to clusters with specific environment labels
+          - clusters:
+              selector:
+                matchExpressions:
+                  - key: environment
+                    operator: In
+                    values: ["local-prod", "local-dev"]
+  template:
+    metadata:
+      name: "{{name}}-{{cluster.name}}"
+    spec:
+      project: default
+
+      destination:
+        server: "{{cluster.server}}"
+        namespace: "{{namespace}}"
+
+      sources:
+        # Chart repository dynamic per environment
+        - repoURL: "{{repoURL}}"
+          chart: "{{name}}"
+          targetRevision: "{{versions.[cluster.labels.environment]}}"
+          helm:
+            releaseName: "{{name}}"
+            valueFiles:
+              - $values/apps/addons/{{.path.basename}}/common/common-values.yaml
+              - $values/apps/addons/{{.path.basename}}/environments/{{cluster.labels.environment}}/default-env-values.yaml
+
+        # Values Git repo (THIS defines $values)
+        - repoURL: https://github.com/smooti/platform-services.git
+          targetRevision: HEAD
+          ref: values
+
+      # Sync policy
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true  
+        automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+          prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+          selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+      

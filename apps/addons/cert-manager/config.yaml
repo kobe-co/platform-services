@@ -1,0 +1,6 @@
+repoURL: https://charts.jetstack.io
+name: cert-manager
+namespace: cert-manager
+versions:
+  local-dev: v1.19.2
+  local-prod: v1.19.2
